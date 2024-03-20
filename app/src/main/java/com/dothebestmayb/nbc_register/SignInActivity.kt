@@ -89,7 +89,7 @@ class SignInActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val intent = Intent(this, SignInActivity::class.java).apply {
+            val intent = Intent(this, HomeActivity::class.java).apply {
                 putExtra(ID, userInfo.id)
                 putExtra(NAME, userInfo.name)
             }
