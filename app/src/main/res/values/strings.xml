@@ -16,4 +16,5 @@
     <string name="prefix_age">"나이 : "</string>
     <string name="mbti_prefix">"MBTI : "</string>
     <string name="exit">종료</string>
+    <string name="default_mbti">ESTJ</string>
 </resources>

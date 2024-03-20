@@ -19,8 +19,8 @@
     - [x] 회원 가입 페이지에서 입력한 아이디/비밀번호가 회원 가입 버튼을 눌러 로그인 화면으로 이동할 때 자동으로 입력되도록 구현 (
       registerForActivityResult 활용)
 - 자기소개 페이지 만들기(HomeActivity)
-    - [ ] SignInActivity에서 받은 extra data(아이디)를 화면에 표시
-    - [ ] ImageView, TextView 외에 각종 Widget을 활용해 자유롭게 화면을 디자인
-    - [ ] 이름, 나이, MBTI 등 자기소개등이 들어가는 위젯을 자유롭게 디자인
-    - [ ] 종료 버튼이 눌리면 SignInActivity로 이동하도록 구현합니다. (finish 활용)
-    - [ ] 자기소개 페이지가 시작될 때 5장 중 랜덤으로 1장의 사진이 표시되도록 구현
+    - [x] SignInActivity에서 받은 extra data(아이디)를 화면에 표시
+    - [x] ImageView, TextView 외에 각종 Widget을 활용해 자유롭게 화면을 디자인
+    - [x] 이름, 나이, MBTI 등 자기소개등이 들어가는 위젯을 자유롭게 디자인
+    - [x] 종료 버튼이 눌리면 SignInActivity로 이동하도록 구현합니다. (finish 활용)
+    - [x] 자기소개 페이지가 시작될 때 5장 중 랜덤으로 1장의 사진이 표시되도록 구현
