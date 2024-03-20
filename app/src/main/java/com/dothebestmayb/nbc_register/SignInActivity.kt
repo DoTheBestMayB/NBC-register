@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.dothebestmayb.nbc_register.model.UserInfo
+import com.dothebestmayb.nbc_register.util.BUNDLE_KEY_FOR_USER_INFO
 import com.dothebestmayb.nbc_register.util.ID
 import com.dothebestmayb.nbc_register.util.NAME
 
@@ -32,9 +33,9 @@ class SignInActivity : AppCompatActivity() {
         }
         val data = result.data
         val userInfo = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            data?.getParcelableExtra("userInfo", UserInfo::class.java)
+            data?.getParcelableExtra(BUNDLE_KEY_FOR_USER_INFO, UserInfo::class.java)
         } else {
-            data?.getParcelableExtra<UserInfo>("userInfo")
+            data?.getParcelableExtra<UserInfo>(BUNDLE_KEY_FOR_USER_INFO)
         } ?: return@registerForActivityResult
         registeredInfo[userInfo.id] = userInfo
         fillIdAndPw(userInfo)
