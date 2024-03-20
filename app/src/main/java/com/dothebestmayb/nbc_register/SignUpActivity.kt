@@ -34,7 +34,7 @@ class SignUpActivity : AppCompatActivity() {
     private fun setListener() {
         registerBtn.setOnClickListener {
             if (checkValidity().not()) {
-                Toast.makeText(this, "입력되지 않은 정보가 있습니다", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.missing_input_exist), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             val userInfo = UserInfo(

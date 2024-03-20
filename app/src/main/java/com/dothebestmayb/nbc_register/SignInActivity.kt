@@ -86,7 +86,7 @@ class SignInActivity : AppCompatActivity() {
 
         loginBtn.setOnClickListener {
             val userInfo = getUserInfo() ?: run {
-                Toast.makeText(this, "아이디, 비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.check_id_and_pw), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -94,7 +94,7 @@ class SignInActivity : AppCompatActivity() {
                 putExtra(ID, userInfo.id)
                 putExtra(NAME, userInfo.name)
             }
-            Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
             startActivity(intent)
         }
 
