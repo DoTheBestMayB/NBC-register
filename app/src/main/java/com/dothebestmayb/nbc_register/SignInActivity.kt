@@ -1,13 +1,16 @@
 package com.dothebestmayb.nbc_register
 
+import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.dothebestmayb.nbc_register.model.UserInfo
 import com.dothebestmayb.nbc_register.util.ID
 import com.dothebestmayb.nbc_register.util.NAME
@@ -23,6 +26,20 @@ class SignInActivity : AppCompatActivity() {
 
     private val registeredInfo = hashMapOf<String, UserInfo>()
 
+    private val getContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode != Activity.RESULT_OK) {
+            return@registerForActivityResult
+        }
+        val data = result.data
+        val userInfo = if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            data?.getParcelableExtra("userInfo", UserInfo::class.java)
+        } else {
+            data?.getParcelableExtra<UserInfo>("userInfo")
+        } ?: return@registerForActivityResult
+        registeredInfo[userInfo.id] = userInfo
+        fillIdAndPw(userInfo)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
@@ -30,6 +47,7 @@ class SignInActivity : AppCompatActivity() {
         setReference()
         setListener()
     }
+
 
     private fun setReference() {
         editTextId = findViewById(R.id.edit_text_id)
@@ -78,6 +96,10 @@ class SignInActivity : AppCompatActivity() {
             Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
             startActivity(intent)
         }
+
+        registerBtn.setOnClickListener {
+            getContent.launch(Intent(this, SignUpActivity::class.java))
+        }
     }
 
     private fun getUserInfo(): UserInfo? {
@@ -89,5 +111,10 @@ class SignInActivity : AppCompatActivity() {
         } else {
             null
         }
+    }
+
+    private fun fillIdAndPw(userInfo: UserInfo) {
+        editTextId.setText(userInfo.id)
+        editTextPw.setText(userInfo.pw)
     }
 }
