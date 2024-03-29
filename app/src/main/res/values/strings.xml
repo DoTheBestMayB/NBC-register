@@ -17,4 +17,5 @@
     <string name="mbti_prefix">"MBTI : "</string>
     <string name="exit">종료</string>
     <string name="default_mbti">ESTJ</string>
+    <string name="id_is_not_registerd">등록된 아이디가 아닙니다.</string>
 </resources>
