@@ -16,10 +16,11 @@
     <string name="prefix_age">"나이 : "</string>
     <string name="mbti_prefix">"MBTI : "</string>
     <string name="exit">종료</string>
-    <string name="default_mbti">ESTJ</string>
     <string name="id_is_not_registerd">등록된 아이디가 아닙니다.</string>
     <string name="pw_length_is_no_correct">비밀번호를 8 ~ 16자내로 입력해주세요.</string>
     <string name="capital_is_not_contained">비밀번호에 대문자를 1개 이상 포함해주세요.</string>
     <string name="special_character_is_not_contained">비밀번호에 특수문자(%1$s)를 1개 이상 포함해주세요.</string>
     <string name="not_allowed_character_is_contained">비밀번호에서 허용되지 않은 특수문자를 지워주세요.</string>
+    <string name="home_activity_should_get_id">HomeActivity를 호출하는 곳에서 ID를 전달해야 합니다.</string>
+    <string name="home_activity_should_get_name">HomeActivity를 호출하는 곳에서 NAME을 전달해야 합니다.</string>
 </resources>

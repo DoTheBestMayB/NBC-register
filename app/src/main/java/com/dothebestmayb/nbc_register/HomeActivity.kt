@@ -1,71 +1,65 @@
 package com.dothebestmayb.nbc_register
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.dothebestmayb.nbc_register.databinding.ActivityHomeBinding
 import com.dothebestmayb.nbc_register.util.ID
 import com.dothebestmayb.nbc_register.util.NAME
-import kotlin.random.Random
 
 class HomeActivity : AppCompatActivity() {
 
-    private lateinit var textId: TextView
-    private lateinit var textName: TextView
-    private lateinit var textAge: TextView
-    private lateinit var textMbti: TextView
-    private lateinit var imageView: ImageView
-    private lateinit var exitBtn: Button
-
-    private val random = Random(System.currentTimeMillis())
+    private lateinit var binding: ActivityHomeBinding
+    private val viewModel: HomeActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setReference()
-        setRandomImage()
-        setInfo()
+        getDataFromIntent()
         setListener()
+        setObserve()
     }
 
-    private fun setReference() {
-        textId = findViewById(R.id.text_view_id)
-        textName = findViewById(R.id.text_view_name)
-        textAge = findViewById(R.id.text_view_age)
-        textMbti = findViewById(R.id.text_view_mbti)
-        imageView = findViewById(R.id.image_view)
-        exitBtn = findViewById(R.id.button_exit)
-    }
-
-    private fun setRandomImage() {
-        val imageId = listOf(
-            R.drawable.garlic,
-            R.drawable.onion,
-            R.drawable.potato,
-            R.drawable.strawberry,
-            R.drawable.sweet_potato
-        )
-        val selectedId = imageId[random.nextInt(0, imageId.size)]
-        imageView.setImageResource(selectedId)
-    }
-
-    private fun setInfo() {
+    private fun getDataFromIntent() {
         val id = intent.getStringExtra(ID)
-            ?: throw IllegalStateException("HomeActivity를 호출하는 곳에서 ID를 전달해야 합니다.")
+            ?: throw IllegalStateException(getString(R.string.home_activity_should_get_id))
         val name = intent.getStringExtra(NAME)
-            ?: throw IllegalStateException("HomeActivity를 호출하는 곳에서 NAME을 전달해야 합니다.")
+            ?: throw IllegalStateException(getString(R.string.home_activity_should_get_name))
 
-        textId.text = id
-        textName.text = name
-        textAge.text = random.nextInt(10, 50).toString()
-        textMbti.text = getString(R.string.default_mbti)
+        viewModel.setUserInfo(id, name)
     }
 
     private fun setListener() {
-        exitBtn.setOnClickListener {
+        binding.buttonExit.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun setObserve() {
+        viewModel.pictureValue.observe(this) {
+            val resourceId = when (it) {
+                PictureValue.GARLIC -> R.drawable.garlic
+                PictureValue.ONION -> R.drawable.onion
+                PictureValue.POTATO -> R.drawable.potato
+                PictureValue.STRAWBERRY -> R.drawable.strawberry
+                PictureValue.SWEET_POTATO -> R.drawable.sweet_potato
+            }
+            binding.imageView.setImageResource(resourceId)
+        }
+
+        viewModel.userId.observe(this) {
+            binding.textViewId.text = it
+        }
+        viewModel.userName.observe(this) {
+            binding.textViewName.text = it
+        }
+        viewModel.userAge.observe(this) {
+            binding.textViewAge.text = it.toString()
+        }
+        viewModel.userMbti.observe(this) {
+            binding.textViewMbti.text = it
         }
     }
 }
