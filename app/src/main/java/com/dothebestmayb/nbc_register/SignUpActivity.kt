@@ -1,53 +1,89 @@
 package com.dothebestmayb.nbc_register
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
-import com.dothebestmayb.nbc_register.model.UserInfo
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.dothebestmayb.nbc_register.databinding.ActivitySignUpBinding
+import com.dothebestmayb.nbc_register.model.ErrorType
 import com.dothebestmayb.nbc_register.util.BUNDLE_KEY_FOR_USER_INFO
 
 class SignUpActivity : AppCompatActivity() {
 
-    private lateinit var editTextName: EditText
-    private lateinit var editTextId: EditText
-    private lateinit var editTextPw: EditText
-    private lateinit var registerBtn: Button
+    private lateinit var binding: ActivitySignUpBinding
+    private val viewModel: SignUpViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        setReference()
         setListener()
-    }
-
-    private fun setReference() {
-        editTextName = findViewById(R.id.edit_text_name)
-        editTextId = findViewById(R.id.edit_text_id)
-        editTextPw = findViewById(R.id.edit_text_pw)
-        registerBtn = findViewById(R.id.button_register)
+        setObserve()
     }
 
     private fun setListener() {
-        registerBtn.setOnClickListener {
-            if (checkValidity().not()) {
-                Toast.makeText(this, getString(R.string.missing_input_exist), Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+        binding.editTextId.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
-            val userInfo = UserInfo(
-                editTextName.text.toString(),
-                editTextId.text.toString(),
-                editTextPw.text.toString(),
-            )
-            intent.putExtra(BUNDLE_KEY_FOR_USER_INFO, userInfo)
-            setResult(Activity.RESULT_OK, intent)
-            finish()
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                viewModel.updateInputId(s.toString())
+            }
+        })
+
+        binding.editTextPw.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                viewModel.updateInputPw(s.toString())
+            }
+        })
+
+        binding.editTextName.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable) {
+                viewModel.updateInputName(s.toString())
+            }
+        })
+
+        binding.buttonRegister.setOnClickListener {
+            viewModel.signUp()
         }
     }
 
-    private fun checkValidity(): Boolean =
-        editTextName.text.isNotBlank() && editTextId.text.isNotBlank() && editTextPw.text.isNotBlank()
+    private fun setObserve() {
+        viewModel.isAllInputFilled.observe(this) {
+            binding.buttonRegister.isEnabled = it
+        }
+
+        viewModel.registeredUserInfo.observe(this) {
+            intent.putExtra(BUNDLE_KEY_FOR_USER_INFO, it)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        }
+
+        viewModel.errorMessage.observe(this) {
+            val text = when (it) {
+                ErrorType.NO_USER_EXIST -> getString(R.string.id_is_not_registerd)
+                ErrorType.NO_INPUT -> getString(R.string.missing_input_exist)
+            }
+            Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+        }
+    }
 }

@@ -97,6 +97,7 @@ class SignInActivity : AppCompatActivity() {
         viewModel.errorMessage.observe(this) {
             val text = when (it) {
                 ErrorType.NO_USER_EXIST -> getString(R.string.id_is_not_registerd)
+                ErrorType.NO_INPUT -> getString(R.string.missing_input_exist)
             }
             Toast.makeText(this, text, Toast.LENGTH_LONG).show()
         }
