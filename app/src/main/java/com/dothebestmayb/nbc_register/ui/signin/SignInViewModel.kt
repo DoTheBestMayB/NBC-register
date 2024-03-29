@@ -57,10 +57,6 @@ class SignInViewModel: ViewModel() {
             _errorMessage.value = SignInErrorType.NOT_VALID
             return
         }
-        if (userInfo.pw != _inputPw.value) {
-            _errorMessage.value = SignInErrorType.NOT_VALID
-            return
-        }
         _loggedUserInfo.value = userInfo
     }
 }
