@@ -14,8 +14,8 @@ import com.dothebestmayb.nbc_register.R
 import com.dothebestmayb.nbc_register.databinding.ActivitySignInBinding
 import com.dothebestmayb.nbc_register.model.SignInErrorType
 import com.dothebestmayb.nbc_register.model.UserInfo
-import com.dothebestmayb.nbc_register.ui.signup.SignUpActivity
 import com.dothebestmayb.nbc_register.ui.home.HomeActivity
+import com.dothebestmayb.nbc_register.ui.signup.SignUpActivity
 import com.dothebestmayb.nbc_register.util.BUNDLE_KEY_FOR_USER_INFO
 import com.dothebestmayb.nbc_register.util.ID
 import com.dothebestmayb.nbc_register.util.NAME

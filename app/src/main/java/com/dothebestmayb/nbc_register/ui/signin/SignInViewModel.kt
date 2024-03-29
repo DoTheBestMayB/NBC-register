@@ -8,7 +8,7 @@ import com.dothebestmayb.nbc_register.model.SignInErrorType
 import com.dothebestmayb.nbc_register.model.UserInfo
 import com.dothebestmayb.nbc_register.ui.UserRepository
 
-class SignInViewModel: ViewModel() {
+class SignInViewModel : ViewModel() {
 
     private val _inputId = MutableLiveData<String>()
     private val _inputPw = MutableLiveData<String>()

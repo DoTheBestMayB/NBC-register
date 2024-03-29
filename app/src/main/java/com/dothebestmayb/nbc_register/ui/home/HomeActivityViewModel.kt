@@ -24,13 +24,6 @@ class HomeActivityViewModel : ViewModel() {
     val userMbti: LiveData<String>
         get() = _userMbti
 
-    fun setUserInfo(id: String, name: String, age: Int? = null, mbti: String? = null) {
-        _uerId.value = id
-        _userName.value = name
-        _userAge.value = age ?: DEFAULT_AGE
-        _userMbti.value = mbti ?: DEFAULT_MBTI
-    }
-
     private val random = Random(System.currentTimeMillis())
 
     private val _pictureValue = MutableLiveData<PictureValue>()
@@ -39,6 +32,13 @@ class HomeActivityViewModel : ViewModel() {
 
     init {
         _pictureValue.value = PictureValue.entries.random(random)
+    }
+
+    fun setUserInfo(id: String, name: String, age: Int? = null, mbti: String? = null) {
+        _uerId.value = id
+        _userName.value = name
+        _userAge.value = age ?: DEFAULT_AGE
+        _userMbti.value = mbti ?: DEFAULT_MBTI
     }
 
     companion object {

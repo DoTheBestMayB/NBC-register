@@ -85,7 +85,9 @@ class SignUpActivity : AppCompatActivity() {
                 SignUpErrorType.PW_LENGTH_IS_NOT_CORRECT -> getString(R.string.pw_length_is_no_correct)
                 SignUpErrorType.CAPITAL_IS_NOT_CONTAINED -> getString(R.string.capital_is_not_contained)
                 SignUpErrorType.SPECIAL_CHARACTER_IS_NOT_CONTAINED -> getString(R.string.special_character_is_not_contained).format(
-                    Validator.allowedSpecialCharacter.joinToString(", "))
+                    Validator.allowedSpecialCharacter.joinToString(", ")
+                )
+
                 SignUpErrorType.NOT_ALLOWED_CHARACTER_IS_CONTAINED -> getString(R.string.not_allowed_character_is_contained)
                 SignUpErrorType.ALREADY_REGISTERED_ID -> getString(R.string.id_is_already_registered)
             }
