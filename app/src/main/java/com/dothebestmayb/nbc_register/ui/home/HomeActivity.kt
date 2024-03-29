@@ -1,9 +1,11 @@
-package com.dothebestmayb.nbc_register
+package com.dothebestmayb.nbc_register.ui.home
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.dothebestmayb.nbc_register.R
 import com.dothebestmayb.nbc_register.databinding.ActivityHomeBinding
+import com.dothebestmayb.nbc_register.model.PictureValue
 import com.dothebestmayb.nbc_register.util.ID
 import com.dothebestmayb.nbc_register.util.NAME
 

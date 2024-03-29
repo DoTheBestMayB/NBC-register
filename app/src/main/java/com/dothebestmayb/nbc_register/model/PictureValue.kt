@@ -1,4 +1,4 @@
-package com.dothebestmayb.nbc_register
+package com.dothebestmayb.nbc_register.model
 
 enum class PictureValue {
     GARLIC,

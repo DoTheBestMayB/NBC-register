@@ -1,4 +1,4 @@
-package com.dothebestmayb.nbc_register
+package com.dothebestmayb.nbc_register.ui.signin
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dothebestmayb.nbc_register.model.SignInErrorType
 import com.dothebestmayb.nbc_register.model.UserInfo
+import com.dothebestmayb.nbc_register.ui.UserRepository
 
 class SignInViewModel: ViewModel() {
 
@@ -35,8 +36,6 @@ class SignInViewModel: ViewModel() {
     val errorMessage: LiveData<SignInErrorType>
         get() = _errorMessage
 
-    private val registeredInfo = hashMapOf<String, UserInfo>()
-
     fun updateInputId(inputId: String) {
         _inputId.value = inputId
     }
@@ -46,17 +45,22 @@ class SignInViewModel: ViewModel() {
     }
 
     fun login() {
-        val userInfo = registeredInfo[_inputId.value] ?: run {
-            _errorMessage.value = SignInErrorType.NO_USER_EXIST
+        val id = _inputId.value ?: run {
+            _errorMessage.value = SignInErrorType.NO_ID_INPUT
             return
         }
-        if (userInfo.pw == _inputPw.value) {
-            _loggedUserInfo.value = userInfo
+        val pw = _inputPw.value ?: run {
+            _errorMessage.value = SignInErrorType.NO_PW_INPUT
+            return
         }
+        val userInfo = UserRepository.getUserInfo(id, pw) ?: run {
+            _errorMessage.value = SignInErrorType.NOT_VALID
+            return
+        }
+        if (userInfo.pw != _inputPw.value) {
+            _errorMessage.value = SignInErrorType.NOT_VALID
+            return
+        }
+        _loggedUserInfo.value = userInfo
     }
-
-    fun registerUserInfo(userInfo: UserInfo) {
-        registeredInfo[userInfo.id] = userInfo
-    }
-
 }

@@ -1,4 +1,4 @@
-package com.dothebestmayb.nbc_register
+package com.dothebestmayb.nbc_register.ui.signin
 
 import android.app.Activity
 import android.content.Intent
@@ -10,9 +10,12 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.dothebestmayb.nbc_register.R
 import com.dothebestmayb.nbc_register.databinding.ActivitySignInBinding
 import com.dothebestmayb.nbc_register.model.SignInErrorType
 import com.dothebestmayb.nbc_register.model.UserInfo
+import com.dothebestmayb.nbc_register.ui.signup.SignUpActivity
+import com.dothebestmayb.nbc_register.ui.home.HomeActivity
 import com.dothebestmayb.nbc_register.util.BUNDLE_KEY_FOR_USER_INFO
 import com.dothebestmayb.nbc_register.util.ID
 import com.dothebestmayb.nbc_register.util.NAME
@@ -33,7 +36,6 @@ class SignInActivity : AppCompatActivity() {
             } else {
                 data?.getParcelableExtra<UserInfo>(BUNDLE_KEY_FOR_USER_INFO)
             } ?: return@registerForActivityResult
-            viewModel.registerUserInfo(userInfo)
             fillIdAndPw(userInfo)
         }
 
@@ -96,7 +98,9 @@ class SignInActivity : AppCompatActivity() {
 
         viewModel.errorMessage.observe(this) {
             val text = when (it) {
-                SignInErrorType.NO_USER_EXIST -> getString(R.string.id_is_not_registerd)
+                SignInErrorType.NOT_VALID -> getString(R.string.check_id_and_pw)
+                SignInErrorType.NO_ID_INPUT -> getString(R.string.missing_id_input)
+                SignInErrorType.NO_PW_INPUT -> getString(R.string.missing_pw_input)
             }
             Toast.makeText(this, text, Toast.LENGTH_LONG).show()
         }

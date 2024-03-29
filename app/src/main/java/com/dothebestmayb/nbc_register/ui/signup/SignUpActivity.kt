@@ -1,4 +1,4 @@
-package com.dothebestmayb.nbc_register
+package com.dothebestmayb.nbc_register.ui.signup
 
 import android.app.Activity
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.dothebestmayb.nbc_register.R
 import com.dothebestmayb.nbc_register.databinding.ActivitySignUpBinding
 import com.dothebestmayb.nbc_register.model.SignUpErrorType
 import com.dothebestmayb.nbc_register.util.BUNDLE_KEY_FOR_USER_INFO
@@ -83,8 +84,10 @@ class SignUpActivity : AppCompatActivity() {
                 SignUpErrorType.NO_INPUT -> getString(R.string.missing_input_exist)
                 SignUpErrorType.PW_LENGTH_IS_NOT_CORRECT -> getString(R.string.pw_length_is_no_correct)
                 SignUpErrorType.CAPITAL_IS_NOT_CONTAINED -> getString(R.string.capital_is_not_contained)
-                SignUpErrorType.SPECIAL_CHARACTER_IS_NOT_CONTAINED -> getString(R.string.special_character_is_not_contained).format(Validator.allowedSpecialCharacter.joinToString(", "))
+                SignUpErrorType.SPECIAL_CHARACTER_IS_NOT_CONTAINED -> getString(R.string.special_character_is_not_contained).format(
+                    Validator.allowedSpecialCharacter.joinToString(", "))
                 SignUpErrorType.NOT_ALLOWED_CHARACTER_IS_CONTAINED -> getString(R.string.not_allowed_character_is_contained)
+                SignUpErrorType.ALREADY_REGISTERED_ID -> getString(R.string.id_is_already_registered)
             }
             Toast.makeText(this, text, Toast.LENGTH_LONG).show()
         }

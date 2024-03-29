@@ -1,8 +1,9 @@
-package com.dothebestmayb.nbc_register
+package com.dothebestmayb.nbc_register.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.dothebestmayb.nbc_register.model.PictureValue
 import kotlin.random.Random
 
 class HomeActivityViewModel : ViewModel() {

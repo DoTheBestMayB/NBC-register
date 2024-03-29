@@ -1,4 +1,4 @@
-package com.dothebestmayb.nbc_register
+package com.dothebestmayb.nbc_register.ui.signup
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dothebestmayb.nbc_register.model.SignUpErrorType
 import com.dothebestmayb.nbc_register.model.UserInfo
+import com.dothebestmayb.nbc_register.ui.UserRepository
 
 class SignUpViewModel : ViewModel() {
 
@@ -68,10 +69,16 @@ class SignUpViewModel : ViewModel() {
             _errorMessage.value = SignUpErrorType.NO_INPUT
             return
         }
+        if (UserRepository.checkRegisterIdPossible(id).not()) {
+            _errorMessage.value = SignUpErrorType.ALREADY_REGISTERED_ID
+            return
+        }
         if (checkPwValidity(pw).not()) {
             return
         }
-        _registeredUserInfo.value = UserInfo(name, id, pw)
+        _registeredUserInfo.value = UserInfo(name, id, pw).apply {
+            UserRepository.registerUserInfo(this)
+        }
     }
 
     private fun checkPwValidity(pw: String): Boolean {
