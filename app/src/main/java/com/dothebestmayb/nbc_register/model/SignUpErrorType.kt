@@ -1,0 +1,5 @@
+package com.dothebestmayb.nbc_register.model
+
+enum class SignUpErrorType {
+    NO_INPUT, PW_LENGTH_IS_NOT_CORRECT, CAPITAL_IS_NOT_CONTAINED, SPECIAL_CHARACTER_IS_NOT_CONTAINED, NOT_ALLOWED_CHARACTER_IS_CONTAINED
+}

@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.dothebestmayb.nbc_register.databinding.ActivitySignUpBinding
-import com.dothebestmayb.nbc_register.model.ErrorType
+import com.dothebestmayb.nbc_register.model.SignUpErrorType
 import com.dothebestmayb.nbc_register.util.BUNDLE_KEY_FOR_USER_INFO
 
 class SignUpActivity : AppCompatActivity() {
@@ -80,8 +80,11 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.errorMessage.observe(this) {
             val text = when (it) {
-                ErrorType.NO_USER_EXIST -> getString(R.string.id_is_not_registerd)
-                ErrorType.NO_INPUT -> getString(R.string.missing_input_exist)
+                SignUpErrorType.NO_INPUT -> getString(R.string.missing_input_exist)
+                SignUpErrorType.PW_LENGTH_IS_NOT_CORRECT -> getString(R.string.pw_length_is_no_correct)
+                SignUpErrorType.CAPITAL_IS_NOT_CONTAINED -> getString(R.string.capital_is_not_contained)
+                SignUpErrorType.SPECIAL_CHARACTER_IS_NOT_CONTAINED -> getString(R.string.special_character_is_not_contained).format(Validator.allowedSpecialCharacter.joinToString(", "))
+                SignUpErrorType.NOT_ALLOWED_CHARACTER_IS_CONTAINED -> getString(R.string.not_allowed_character_is_contained)
             }
             Toast.makeText(this, text, Toast.LENGTH_LONG).show()
         }

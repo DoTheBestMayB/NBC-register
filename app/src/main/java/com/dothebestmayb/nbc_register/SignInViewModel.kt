@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.dothebestmayb.nbc_register.model.ErrorType
+import com.dothebestmayb.nbc_register.model.SignInErrorType
 import com.dothebestmayb.nbc_register.model.UserInfo
 
 class SignInViewModel: ViewModel() {
@@ -31,8 +31,8 @@ class SignInViewModel: ViewModel() {
     val loggedUserInfo: LiveData<UserInfo>
         get() = _loggedUserInfo
 
-    private val _errorMessage = MutableLiveData<ErrorType>()
-    val errorMessage: LiveData<ErrorType>
+    private val _errorMessage = MutableLiveData<SignInErrorType>()
+    val errorMessage: LiveData<SignInErrorType>
         get() = _errorMessage
 
     private val registeredInfo = hashMapOf<String, UserInfo>()
@@ -47,7 +47,7 @@ class SignInViewModel: ViewModel() {
 
     fun login() {
         val userInfo = registeredInfo[_inputId.value] ?: run {
-            _errorMessage.value = ErrorType.NO_USER_EXIST
+            _errorMessage.value = SignInErrorType.NO_USER_EXIST
             return
         }
         if (userInfo.pw == _inputPw.value) {

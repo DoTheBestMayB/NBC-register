@@ -1,6 +1,5 @@
 package com.dothebestmayb.nbc_register.model
 
-enum class ErrorType {
+enum class SignInErrorType {
     NO_USER_EXIST,
-    NO_INPUT
 }

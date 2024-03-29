@@ -11,7 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.dothebestmayb.nbc_register.databinding.ActivitySignInBinding
-import com.dothebestmayb.nbc_register.model.ErrorType
+import com.dothebestmayb.nbc_register.model.SignInErrorType
 import com.dothebestmayb.nbc_register.model.UserInfo
 import com.dothebestmayb.nbc_register.util.BUNDLE_KEY_FOR_USER_INFO
 import com.dothebestmayb.nbc_register.util.ID
@@ -96,8 +96,7 @@ class SignInActivity : AppCompatActivity() {
 
         viewModel.errorMessage.observe(this) {
             val text = when (it) {
-                ErrorType.NO_USER_EXIST -> getString(R.string.id_is_not_registerd)
-                ErrorType.NO_INPUT -> getString(R.string.missing_input_exist)
+                SignInErrorType.NO_USER_EXIST -> getString(R.string.id_is_not_registerd)
             }
             Toast.makeText(this, text, Toast.LENGTH_LONG).show()
         }
