@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.dothebestmayb.nbc_register.model.PictureValue
 import kotlin.random.Random
 
-class HomeActivityViewModel : ViewModel() {
+class HomeViewModel : ViewModel() {
 
     private val _uerId = MutableLiveData<String>()
     val userId: LiveData<String>
