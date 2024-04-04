@@ -10,6 +10,7 @@ import com.dothebestmayb.nbc_register.R
 import com.dothebestmayb.nbc_register.databinding.ActivitySignUpBinding
 import com.dothebestmayb.nbc_register.model.CheckType
 import com.dothebestmayb.nbc_register.model.SignUpErrorType
+import com.dothebestmayb.nbc_register.model.TypeForObserveAtSignUp
 import com.dothebestmayb.nbc_register.util.BUNDLE_KEY_FOR_USER_INFO
 import com.google.android.material.textfield.TextInputLayout
 
@@ -66,26 +67,23 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun setObserve() {
-        viewModel.inputName.observe(this) {
-            // helperText에 null을 넣으면 disabled 되면서 TextInputLayout에 topToBottomOf 제약을 건 비밀번호 확인 창의 위치가 변경됨
-            binding.textFieldName.helperText = if (it.isBlank()) {
-                getString(R.string.hint_for_name)
-            } else {
-                "　" // Helper Text가 사라지면 비밀번호 확인 창의 높이가 달라지기 때문에 ㄱ + 한자 + 1을 이용해 만들 수 있는 빈 특수문자 사용
+        listOf(
+            TypeForObserveAtSignUp.NAME to viewModel.isNameFilled,
+            TypeForObserveAtSignUp.PW_CHECK to viewModel.isPwFilled,
+            TypeForObserveAtSignUp.EMAIL to viewModel.isEmailFilled,
+        ).forEach { (checkType, liveData) ->
+            val (targetView, helperText) = when (checkType) {
+                TypeForObserveAtSignUp.NAME -> binding.textFieldName to getString(R.string.hint_for_name)
+                TypeForObserveAtSignUp.PW_CHECK -> binding.textFieldPw to getString(R.string.hint_for_pw_condition)
+                TypeForObserveAtSignUp.EMAIL -> binding.textFieldEmailFront to getString(R.string.missing_input_email)
             }
-        }
-        viewModel.inputPw.observe(this) {
-            binding.textFieldPw.helperText = if (it.isBlank()) {
-                getString(R.string.hint_for_pw_condition)
-            } else {
-                "　"
-            }
-        }
-        viewModel.isEmailFilled.observe(this) {
-            binding.textFieldEmailFront.helperText = if (it) {
-                "　"
-            } else {
-                getString(R.string.missing_input_email)
+            liveData.observe(this) {
+                // helperText에 null을 넣으면 disabled 되면서 TextInputLayout에 topToBottomOf 제약을 건 비밀번호 확인 창의 위치가 변경됨
+                targetView.helperText = if (it) {
+                    "　" // Helper Text가 사라지면 비밀번호 확인 창의 높이가 달라지기 때문에 ㄱ + 한자 + 1을 이용해 만들 수 있는 빈 특수문자 사용
+                } else {
+                    helperText
+                }
             }
         }
         viewModel.isAllValid.observe(this) {

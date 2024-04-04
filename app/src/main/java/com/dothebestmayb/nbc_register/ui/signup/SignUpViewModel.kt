@@ -13,15 +13,17 @@ class SignUpViewModel : ViewModel() {
     private val validator = Validator()
 
     private val _inputName = MutableLiveData<String>()
-    val inputName: LiveData<String>
-        get() = _inputName
+    private val _isNameFilled = MutableLiveData<Boolean>()
+    val isNameFilled: LiveData<Boolean>
+        get() = _isNameFilled
 
     private val _inputEmailFront = MutableLiveData<String>()
     private val _inputEmailTail = MutableLiveData<String>()
 
     private val _inputPw = MutableLiveData<String>()
-    val inputPw: LiveData<String>
-        get() = _inputPw
+    private val _isPwFilled = MutableLiveData<Boolean>()
+    val isPwFilled: LiveData<Boolean>
+        get() = _isPwFilled
 
     private val _inputPwCheck = MutableLiveData<String>()
 
@@ -35,7 +37,7 @@ class SignUpViewModel : ViewModel() {
     val isEmailFilled: LiveData<Boolean>
         get() = _isEmailFilled
 
-    private fun checkEmailFilled() = _inputEmailFront.value?.isNotBlank() == true || _inputEmailTail.value?.isNotBlank() == true
+    private fun checkEmailFilled() = _inputEmailFront.value?.isNotBlank() == true && _inputEmailTail.value?.isNotBlank() == true
 
     private val isPwValid = MutableLiveData(false)
 
@@ -64,6 +66,7 @@ class SignUpViewModel : ViewModel() {
     fun updateInputPw(input: String) {
         checkPwValidity(input)
         _inputPw.value = input
+        _isPwFilled.value = input.isNotBlank() == true
     }
 
     fun updateInputPwCheck(input: String) {
@@ -78,6 +81,7 @@ class SignUpViewModel : ViewModel() {
 
     fun updateInputName(input: String) {
         _inputName.value = input
+        _isNameFilled.value = input.isNotBlank() == true
     }
 
     fun updateInputEmailFront(input: String) {
