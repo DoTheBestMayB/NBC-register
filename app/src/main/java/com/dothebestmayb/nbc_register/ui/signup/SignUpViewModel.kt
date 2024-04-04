@@ -28,30 +28,30 @@ class SignUpViewModel : ViewModel() {
     private val _isEmailFilled = MediatorLiveData<Boolean>().apply {
         listOf(_inputEmailFront, _inputEmailTail).forEach {
             addSource(it) {
-                this.value = checkEmailNotFilled()
+                this.value = checkEmailFilled()
             }
         }
     }
     val isEmailFilled: LiveData<Boolean>
         get() = _isEmailFilled
 
-    private fun checkEmailNotFilled() =
-        _inputEmailFront.value.isNullOrBlank() || _inputEmailTail.value.isNullOrBlank()
+    private fun checkEmailFilled() = _inputEmailFront.value?.isNotBlank() == true || _inputEmailTail.value?.isNotBlank() == true
 
+    private val isPwValid = MutableLiveData(false)
 
-    private val _isAllInputFilled = MediatorLiveData<Boolean>().apply {
+    private val _isAllValid = MediatorLiveData<Boolean>().apply {
         listOf(_inputName, _inputEmailFront, _inputEmailTail, _inputPw, _inputPwCheck).forEach {
             addSource(it) {
-                this.value = checkAllInputFilled()
+                this.value = checkAllValid()
             }
         }
     }
+    val isAllValid: LiveData<Boolean>
+        get() = _isAllValid
 
-    private fun checkAllInputFilled() =
-        !(checkEmailNotFilled() || _inputName.value.isNullOrBlank() || _inputPw.value.isNullOrBlank() || _inputPwCheck.value.isNullOrBlank())
+    private fun checkAllValid() = checkEmailFilled() && _inputName.value?.isNotBlank() == true && isPwValid.value == true && checkPwSame()
 
-    val isAllInputFilled: LiveData<Boolean>
-        get() = _isAllInputFilled
+    private fun checkPwSame() = _inputPw.value == _inputPwCheck.value
 
     private val _registeredUserInfo = MutableLiveData<UserInfo>()
     val registeredUserInfo: LiveData<UserInfo>
@@ -62,11 +62,18 @@ class SignUpViewModel : ViewModel() {
         get() = _errorType
 
     fun updateInputPw(input: String) {
+        checkPwValidity(input)
         _inputPw.value = input
     }
 
     fun updateInputPwCheck(input: String) {
         _inputPwCheck.value = input
+    }
+
+    private fun checkPwValidity(pw: String) {
+        // 10자리 이상, 대문자 반드시 포함, 특수문자 !, @, #를 1개 이상 포함, 허용되지 않는 특수문자를 포함하지 않음
+        isPwValid.value = validator.checkLengthValid(pw) && validator.checkContainCapital(pw) &&
+                validator.checkContainAtLeastOneSpecialCharacter(pw) && validator.checkNotContainNotAllowedSpecialCharacter(pw)
     }
 
     fun updateInputName(input: String) {
@@ -104,35 +111,11 @@ class SignUpViewModel : ViewModel() {
             _errorType.value = SignUpErrorType.ALREADY_REGISTERED_ID
             return
         }
-        if (checkPwValidity(pw).not()) {
-            return
+        val userInfo = UserInfo(name, email, pw)
+        if (UserRepository.registerUserInfo(userInfo)) {
+            _registeredUserInfo.value = userInfo
+        } else {
+            _errorType.value = SignUpErrorType.ALREADY_REGISTERED_ID
         }
-        _registeredUserInfo.value = UserInfo(name, email, pw).apply {
-            UserRepository.registerUserInfo(this)
-        }
-    }
-
-    private fun checkPwValidity(pw: String): Boolean {
-        // 8 ~ 16자리 확인
-        if (validator.checkLength(pw).not()) {
-            _errorType.value = SignUpErrorType.PW_LENGTH_IS_NOT_CORRECT
-            return false
-        }
-        // 대문자 반드시 포함
-        if (validator.checkContainCapital(pw).not()) {
-            _errorType.value = SignUpErrorType.CAPITAL_IS_NOT_CONTAINED
-            return false
-        }
-        // 특수문자 !, @, #를 1개 이상 포함하는지 확인
-        if (validator.checkContainAtLeastOneSpecialCharacter(pw).not()) {
-            _errorType.value = SignUpErrorType.SPECIAL_CHARACTER_IS_NOT_CONTAINED
-            return false
-        }
-        // 허용되지 않는 특수문자를 포함하는지 확인
-        if (validator.checkContainNotAllowedSpecialCharacter(pw)) {
-            _errorType.value = SignUpErrorType.NOT_ALLOWED_CHARACTER_IS_CONTAINED
-            return false
-        }
-        return true
     }
 }

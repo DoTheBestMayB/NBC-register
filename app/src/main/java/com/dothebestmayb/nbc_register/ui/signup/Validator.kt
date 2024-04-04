@@ -4,11 +4,11 @@ import java.text.BreakIterator
 
 class Validator {
 
-    private val validPwLength = 8..16
+    private val minPwLength = 10
     private val breakIterator = BreakIterator.getCharacterInstance()
     private val disallowedSpecialCharacterRegex = Regex("[^@#!\\w]")
 
-    fun checkLength(input: String): Boolean = countLengthOfLetter(input) in validPwLength
+    fun checkLengthValid(input: String): Boolean = countLengthOfLetter(input) >= minPwLength
 
     private fun countLengthOfLetter(input: String): Int {
         breakIterator.setText(input)
@@ -28,8 +28,8 @@ class Validator {
         return pw.any { it in allowedSpecialCharacter }
     }
 
-    fun checkContainNotAllowedSpecialCharacter(pw: String): Boolean {
-        return disallowedSpecialCharacterRegex.containsMatchIn(pw)
+    fun checkNotContainNotAllowedSpecialCharacter(pw: String): Boolean {
+        return disallowedSpecialCharacterRegex.containsMatchIn(pw).not()
     }
 
     companion object {

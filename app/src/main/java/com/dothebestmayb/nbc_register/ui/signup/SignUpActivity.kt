@@ -29,8 +29,8 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        binding.textFieldName.helperText = "이름을 입력해주세요."
-        binding.textFieldEmailFront.helperText = "이메일을 입력해주세요."
+        binding.textFieldName.helperText = getString(R.string.hint_for_name)
+        binding.textFieldEmailFront.helperText = getString(R.string.missing_input_email)
     }
 
     private fun setListener() = with(binding) {
@@ -61,26 +61,27 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.inputName.observe(this) {
             // helperText에 null을 넣으면 disabled 되면서 TextInputLayout에 topToBottomOf 제약을 건 비밀번호 확인 창의 위치가 변경됨
             binding.textFieldName.helperText = if (it.isBlank()) {
-                "이름을 입력해주세요."
+                getString(R.string.hint_for_name)
             } else {
-                "　" // // Helper Text가 사라지면 비밀번호 확인 창의 높이가 달라지기 때문에 ㄱ + 한자 + 1을 이용해 만들 수 있는 빈 특수문자 사용
+                // Helper Text가 사라지면 비밀번호 확인 창의 높이가 달라지기 때문에 ㄱ + 한자 + 1을 이용해 만들 수 있는 빈 특수문자 사용
+                getString(R.string.dummy_empty_string)
             }
         }
         viewModel.inputPw.observe(this) {
             binding.textFieldPw.helperText = if (it.isBlank()) {
-                "10자리 이상, 특수문자, 대문자 포함"
+                getString(R.string.hint_for_pw_condition)
             } else {
-                "　" // Helper Text가 사라지면 비밀번호 확인 창의 높이가 달라지기 때문에 ㄱ + 한자 + 1을 이용해 만들 수 있는 빈 특수문자 사용
+                getString(R.string.dummy_empty_string)
             }
         }
         viewModel.isEmailFilled.observe(this) {
             binding.textFieldEmailFront.helperText = if (it) {
-                "이메일을 입력해주세요."
+                getString(R.string.dummy_empty_string)
             } else {
-                "　"
+                getString(R.string.missing_input_email)
             }
         }
-        viewModel.isAllInputFilled.observe(this) {
+        viewModel.isAllValid.observe(this) {
             binding.buttonRegister.isEnabled = it
         }
 
@@ -93,13 +94,6 @@ class SignUpActivity : AppCompatActivity() {
         viewModel.errorType.observe(this) {
             val text = when (it) {
                 SignUpErrorType.NO_INPUT -> getString(R.string.missing_input_exist)
-                SignUpErrorType.PW_LENGTH_IS_NOT_CORRECT -> getString(R.string.pw_length_is_no_correct)
-                SignUpErrorType.CAPITAL_IS_NOT_CONTAINED -> getString(R.string.capital_is_not_contained)
-                SignUpErrorType.SPECIAL_CHARACTER_IS_NOT_CONTAINED -> getString(R.string.special_character_is_not_contained).format(
-                    Validator.allowedSpecialCharacter.joinToString(", ")
-                )
-
-                SignUpErrorType.NOT_ALLOWED_CHARACTER_IS_CONTAINED -> getString(R.string.not_allowed_character_is_contained)
                 SignUpErrorType.ALREADY_REGISTERED_ID -> getString(R.string.id_is_already_registered)
             }
             Toast.makeText(this, text, Toast.LENGTH_LONG).show()
