@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="이메일"
+        android:text="@string/email"
         app:layout_constraintStart_toStartOf="@id/text_field_email_front"
         app:layout_constraintTop_toBottomOf="@id/text_field_name" />
 
@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="비밀번호"
+        android:text="@string/pw"
         app:layout_constraintStart_toStartOf="@id/text_field_email_front"
         app:layout_constraintTop_toBottomOf="@id/text_field_email_front" />
 
@@ -118,7 +118,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="비밀번호 확인"
+        android:text="@string/pw_check"
         app:layout_constraintStart_toStartOf="@id/text_field_pw"
         app:layout_constraintTop_toBottomOf="@id/text_field_pw" />
 
