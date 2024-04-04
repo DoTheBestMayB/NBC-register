@@ -71,20 +71,19 @@ class SignUpActivity : AppCompatActivity() {
             binding.textFieldName.helperText = if (it.isBlank()) {
                 getString(R.string.hint_for_name)
             } else {
-                // Helper Text가 사라지면 비밀번호 확인 창의 높이가 달라지기 때문에 ㄱ + 한자 + 1을 이용해 만들 수 있는 빈 특수문자 사용
-                getString(R.string.dummy_empty_string)
+                "　" // Helper Text가 사라지면 비밀번호 확인 창의 높이가 달라지기 때문에 ㄱ + 한자 + 1을 이용해 만들 수 있는 빈 특수문자 사용
             }
         }
         viewModel.inputPw.observe(this) {
             binding.textFieldPw.helperText = if (it.isBlank()) {
                 getString(R.string.hint_for_pw_condition)
             } else {
-                getString(R.string.dummy_empty_string)
+                "　"
             }
         }
         viewModel.isEmailFilled.observe(this) {
             binding.textFieldEmailFront.helperText = if (it) {
-                getString(R.string.dummy_empty_string)
+                "　"
             } else {
                 getString(R.string.missing_input_email)
             }

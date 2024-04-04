@@ -15,7 +15,6 @@
     <string name="missing_input_email">이메일을 입력해주세요.</string>
     <string name="missing_id_input">아이디를 입력하세요.</string>
     <string name="missing_pw_input">비밀번호를 입력하세요.</string>
-    <string name="dummy_empty_string">　</string>
     <string name="prefix_id">"아이디 : "</string>
     <string name="prefix_name">"이름 : "</string>
     <string name="prefix_age">"나이 : "</string>
