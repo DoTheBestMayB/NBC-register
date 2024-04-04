@@ -5,8 +5,8 @@ import com.dothebestmayb.nbc_register.model.UserInfo
 object UserRepository {
     private val registeredInfo = hashMapOf<String, UserInfo>()
 
-    fun getUserInfo(userId: String, userPw: String): UserInfo? {
-        val info = registeredInfo[userId] ?: return null
+    fun getUserInfo(userEmail: String, userPw: String): UserInfo? {
+        val info = registeredInfo[userEmail] ?: return null
         if (info.pw != userPw) {
             return null
         }
@@ -14,14 +14,14 @@ object UserRepository {
     }
 
     fun registerUserInfo(userInfo: UserInfo): Boolean {
-        if (userInfo.id in registeredInfo) {
+        if (userInfo.email in registeredInfo) {
             return false
         }
-        registeredInfo[userInfo.id] = userInfo
+        registeredInfo[userInfo.email] = userInfo
         return true
     }
 
-    fun checkRegisterIdPossible(id: String): Boolean {
-        return id !in registeredInfo
+    fun checkRegisterEmailPossible(email: String): Boolean {
+        return email !in registeredInfo
     }
 }

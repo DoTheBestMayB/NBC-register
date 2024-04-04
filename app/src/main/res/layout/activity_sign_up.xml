@@ -6,81 +6,153 @@
     android:layout_height="match_parent"
     tools:context=".ui.signup.SignUpActivity">
 
-    <ImageView
-        android:id="@+id/image_view_logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:src="@drawable/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/text_view_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/name"
-        app:layout_constraintStart_toStartOf="@id/edit_text_name"
-        app:layout_constraintTop_toBottomOf="@id/image_view_logo" />
+        app:layout_constraintStart_toStartOf="@id/text_field_name"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edit_text_name"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_field_name"
+        style="?attr/textInputFilledStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:hint="@string/hint_for_name"
+        android:layout_marginHorizontal="12dp"
+        app:boxBackgroundColor="@color/white"
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="@android:color/holo_red_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_view_name" />
+        app:layout_constraintTop_toBottomOf="@id/text_view_name">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            tools:text="1234567890123456789012345678901234567890" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/text_view_id"
+        android:id="@+id/tv_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/id"
-        app:layout_constraintStart_toStartOf="@id/edit_text_name"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_name" />
+        android:text="이메일"
+        app:layout_constraintStart_toStartOf="@id/text_field_email_front"
+        app:layout_constraintTop_toBottomOf="@id/text_field_name" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edit_text_id"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_field_email_front"
+        style="?attr/textInputFilledStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_for_id"
-        app:layout_constraintEnd_toEndOf="@id/edit_text_name"
-        app:layout_constraintStart_toStartOf="@id/edit_text_name"
-        app:layout_constraintTop_toBottomOf="@id/text_view_id" />
+        android:layout_marginHorizontal="12dp"
+        app:boxBackgroundColor="@color/white"
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="@android:color/holo_red_light"
+        app:layout_constraintEnd_toStartOf="@id/text_field_email_tail"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_email">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            tools:text="12345678901234567890" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_field_email_tail"
+        style="?attr/textInputFilledStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        app:boxBackgroundColor="@color/white"
+        app:helperTextTextColor="@android:color/holo_red_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/text_field_email_front"
+        app:layout_constraintTop_toTopOf="@id/text_field_email_front">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            tools:text="1234567890123456789012345678901234567890" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
-        android:id="@+id/text_view_pw"
+        android:id="@+id/tv_pw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/pw"
-        app:layout_constraintStart_toStartOf="@id/edit_text_id"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_id" />
+        android:text="비밀번호"
+        app:layout_constraintStart_toStartOf="@id/text_field_email_front"
+        app:layout_constraintTop_toBottomOf="@id/text_field_email_front" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/edit_text_pw"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_field_pw"
+        style="?attr/textInputFilledStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_for_pw"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@id/edit_text_id"
-        app:layout_constraintStart_toStartOf="@id/edit_text_id"
-        app:layout_constraintTop_toBottomOf="@id/text_view_pw" />
+        android:layout_marginHorizontal="12dp"
+        app:boxBackgroundColor="@color/white"
+        app:helperText="10자리 이상, 특수문자, 대문자 포함"
+        app:helperTextTextColor="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_pw">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            tools:text="1234567890123456789012345678901234567890" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_pw_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="비밀번호 확인"
+        app:layout_constraintStart_toStartOf="@id/text_field_pw"
+        app:layout_constraintTop_toBottomOf="@id/text_field_pw" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_field_pw_check"
+        style="?attr/textInputFilledStyle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        app:boxBackgroundColor="@color/white"
+        app:helperTextTextColor="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_pw_check">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            tools:text="1234567890123456789012345678901234567890" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
     <Button
         android:id="@+id/button_register"
+        style="@style/Widget.AppCompat.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="12dp"
         android:layout_marginTop="20dp"
+        android:enabled="false"
         android:text="@string/register"
-        app:layout_constraintEnd_toEndOf="@id/edit_text_id"
-        app:layout_constraintStart_toStartOf="@id/edit_text_id"
-        app:layout_constraintTop_toBottomOf="@id/edit_text_pw" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -89,7 +89,7 @@ class SignInActivity : AppCompatActivity() {
 
         viewModel.loggedUserInfo.observe(this) { userInfo ->
             val intent = Intent(this, HomeActivity::class.java).apply {
-                putExtra(ID, userInfo.id)
+                putExtra(ID, userInfo.email)
                 putExtra(NAME, userInfo.name)
             }
             Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show()
@@ -107,7 +107,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun fillIdAndPw(userInfo: UserInfo) {
-        binding.editTextId.setText(userInfo.id)
+        binding.editTextId.setText(userInfo.email)
         binding.editTextPw.setText(userInfo.pw)
     }
 }
