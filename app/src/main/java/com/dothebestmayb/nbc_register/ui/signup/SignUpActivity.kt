@@ -42,18 +42,26 @@ class SignUpActivity : AppCompatActivity() {
             CheckType.PW_CHECK to textFieldPwCheck,
         ).forEach { (checkType: CheckType, tf: TextInputLayout) ->
             tf.editText?.doOnTextChanged { s, _, _, _ ->
-                when (checkType) {
-                    CheckType.NAME -> viewModel.updateInputName(s.toString())
-                    CheckType.EMAIL_FRONT -> viewModel.updateInputEmailFront(s.toString())
-                    CheckType.EMAIL_TAIL -> viewModel.updateInputEmailTail(s.toString())
-                    CheckType.PW -> viewModel.updateInputPw(s.toString())
-                    CheckType.PW_CHECK -> viewModel.updateInputPwCheck(s.toString())
-                }
+                inputData(checkType, s.toString())
+            }
+            // Focus가 바뀔 때 유효성을 검사해야 하는 이유를 아직 모르겠습니다.
+            tf.setOnFocusChangeListener { v, _ ->
+                val s = (v as TextInputLayout).editText.toString()
+                inputData(checkType, s)
             }
         }
-
         binding.buttonRegister.setOnClickListener {
             viewModel.signUp()
+        }
+    }
+
+    private fun inputData(checkType: CheckType, s: String) {
+        when (checkType) {
+            CheckType.NAME -> viewModel.updateInputName(s)
+            CheckType.EMAIL_FRONT -> viewModel.updateInputEmailFront(s)
+            CheckType.EMAIL_TAIL -> viewModel.updateInputEmailTail(s)
+            CheckType.PW -> viewModel.updateInputPw(s)
+            CheckType.PW_CHECK -> viewModel.updateInputPwCheck(s)
         }
     }
 
