@@ -77,10 +77,9 @@ class SignUpActivity : AppCompatActivity() {
                 TypeForObserveAtSignUp.PW_CHECK -> binding.textFieldPw to getString(R.string.hint_for_pw_condition)
                 TypeForObserveAtSignUp.EMAIL -> binding.textFieldEmailFront to getString(R.string.missing_input_email)
             }
-            liveData.observe(this) {
-                // helperText에 null을 넣으면 disabled 되면서 TextInputLayout에 topToBottomOf 제약을 건 비밀번호 확인 창의 위치가 변경됨
-                targetView.helperText = if (it) {
-                    "　" // Helper Text가 사라지면 비밀번호 확인 창의 높이가 달라지기 때문에 ㄱ + 한자 + 1을 이용해 만들 수 있는 빈 특수문자 사용
+            liveData.observe(this) { isTextFilled ->
+                targetView.helperText = if (isTextFilled) {
+                    null
                 } else {
                     helperText
                 }
